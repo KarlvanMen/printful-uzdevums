@@ -1,21 +1,26 @@
 <template>
   <div class="container" v-if="response">
+    <!-- Initial screen -->
     <StartScreen 
     v-if="response.type === 'start'"
     v-bind:content="response"
     v-on:ready="setReply"/>
+    <!-- Question with text only -->
     <TextQ
     v-if="response.type === 'textq'"
     v-bind:content="response"
     v-on:ready="setReply"/>
+    <!-- Question with images only -->
     <ImgQ
     v-if="response.type === 'imgq'"
     v-bind:content="response"
     v-on:ready="setReply"/>
+    <!-- Final screen -->
     <Finito
     v-if="response.type === 'finito'"
     v-bind:content="response"/>
     <br>
+    <!-- "Continue" button -->
     <button 
       v-if="showBttn"
       class="button is-primary is-medium is-outlined" 
@@ -25,6 +30,7 @@
       NEXT
     </button>
   </div>
+  <!-- Loading screen -->
   <b-loading 
     v-else
     :is-full-page="true" 
@@ -33,13 +39,15 @@
 </template>
 
 <script>
+// Important stuff
+import { getURL, postURL } from '../api.js';
+import { mapGetters, mapActions } from 'vuex';
+
+// Components
 import StartScreen from './StartScreen.vue';
 import TextQ from './questions/TextQ.vue';
 import ImgQ from './questions/ImgQ.vue';
 import Finito from './Finito.vue';
-
-import {getURL, postURL} from '../api.js';
-import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Container',
@@ -73,31 +81,33 @@ export default {
     ...mapActions ([
       'updateProgress'
     ]),
+    // Asks back-end for information about the screen
     getView() {
       getURL('question').then((res)=>{
-        console.log(res);
         this.response = res.content;
+        // Resetting variables
         this.reply = null;
         this.loading = false;
         if (res.length) {
           this.updateProgress({length: res.length, question: res.question});          
           if((this.max > 0) && (this.max === this.value)) {
             this.showBttn = false;
-            console.log(111)
           }
         }
       });
     },
+    // Tells back-end that user has replied
     nextView() {
       if (this.reply != null) {
+        // Resetting variables
         this.response = null;
         this.loading = true;
         postURL('answer', {data: this.reply}).then((res)=>{
           this.getView();
-          console.log(res);
         })
       }
     },
+    // Seperated for future improvements
     setReply(rep) {
       this.reply = rep;
     }

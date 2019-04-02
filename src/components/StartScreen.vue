@@ -1,5 +1,6 @@
 <template>
   <section>
+    <!-- Title -->
     <div class="hero is-primary is-bold">
       <div class="hero-body" v-if="content">
         <h1 class="title" v-html="content.title">
@@ -7,7 +8,9 @@
       </div>
     </div>
     <br>
+    <!-- Input Fields -->
     <div class="field column is-half is-offset-one-quarter">
+      <!-- Name -->
       <div class="control has-icons-left">
         <input 
         class="input is-primary" 
@@ -21,6 +24,7 @@
         </b-icon>
       </div>
       <br>
+      <!-- Test -->
       <div class="select is-primary">
         <select v-model="test">
           <option disabled value="-1">Select test</option>
@@ -60,6 +64,7 @@ export default {
         name: this.name,
         test: this.test
       };
+      // Telling Container.vue that the "form" is complete
       if(name !== null && this.test !== -1) {
         this.$emit('ready',this.reply);
       }

@@ -11,6 +11,7 @@ const store = {
       next: "CONTINUE"
     }
   },
+  // DO NOT USE DIRECTLY! Call actions to do mutations
   mutations: {
     updateScreen (state, data) {
       state.currentScreen = data.question;
@@ -18,20 +19,22 @@ const store = {
     }
   },
   getters: {
-    getStart: state => {
-      return state.start;
-    },
+    // Get the text for the button
+    // (Could add some mutation to change it)
     getNextBttn: state => {
       return state.text.next;
     },
+    // Used in progress bar and for next button
     getScreen: state => {
       return state.currentScreen;
     },
+    // Used in progress bar, for next button, and final screen
     getLength: state => {
       return state.totalLength;
     },
   },
   actions: {
+    // Update progress
     updateProgress ({commit}, data) {
       commit('updateScreen', data);
     }

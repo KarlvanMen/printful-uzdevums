@@ -1,5 +1,6 @@
 <template>
   <section>
+    <!-- Title/Question -->
     <div class="question text-question">
       <div class="hero is-primary is-bold">
         <div class="hero-body">
@@ -8,6 +9,7 @@
         </div>
       </div>
       <br>
+      <!-- Answers -->
       <div class="block columns is-mobile">
         <b-radio
           class="column"
@@ -32,6 +34,7 @@ export default {
     }
   },
   watch: {
+    // Monitor user reply
     reply(to, from) {
       this.$emit('ready', to);
     }
@@ -53,7 +56,7 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   padding: 0 10px;
-  .column {
+  .column.radio {
     width: 100%;
     flex: 1 0 auto;
     text-align: center;
