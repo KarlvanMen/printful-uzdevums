@@ -1,5 +1,8 @@
 # printful-uzdevums
 
+Mērķis ir uztaisīt vienkāršu testa sistēmu.
+Back-end (./backend) ir paredzēts, ka stāv uz localhost:8099 (var mainīt iekš, ./src/api.js).
+
 ## Project setup
 ```
 npm install
